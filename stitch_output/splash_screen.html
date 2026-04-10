@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Barangku - Splash Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#576848",
+                    "on-primary-container": "#def1cd",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c5c8bd",
+                    "inverse-on-surface": "#eef2e5",
+                    "on-secondary-fixed-variant": "#3b4b2e",
+                    "secondary-fixed": "#d5e9c1",
+                    "surface-dim": "#d7dccf",
+                    "on-surface": "#181d15",
+                    "on-primary-fixed": "#111f09",
+                    "on-error-container": "#93000a",
+                    "background": "#f7fbed",
+                    "outline": "#75786f",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f1f5e8",
+                    "surface-container-highest": "#e0e4d7",
+                    "secondary": "#536344",
+                    "surface-container-high": "#e5eadd",
+                    "tertiary": "#4a563f",
+                    "tertiary-fixed": "#dae7ca",
+                    "on-tertiary-fixed-variant": "#3f4a35",
+                    "primary-fixed-dim": "#baccaa",
+                    "surface-tint": "#536347",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#becbaf",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e0e4d7",
+                    "primary-container": "#5e6f52",
+                    "error-container": "#ffdad6",
+                    "surface": "#f7fbed",
+                    "inverse-surface": "#2d3229",
+                    "secondary-container": "#d3e6be",
+                    "on-surface-variant": "#444840",
+                    "on-background": "#181d15",
+                    "tertiary-container": "#626e56",
+                    "surface-container": "#ebf0e2",
+                    "on-secondary-fixed": "#111f06",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#d5e9c5",
+                    "primary": "#46573b",
+                    "on-primary-fixed-variant": "#3b4b31",
+                    "surface-bright": "#f7fbed",
+                    "on-tertiary-fixed": "#141e0c",
+                    "inverse-primary": "#baccaa",
+                    "secondary-fixed-dim": "#bacda6",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#e3f0d2"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f7fbed; /* Using surface from theme */
+      }
+      /* Subtle Ambient Glow for the background */
+      .ambient-glow {
+        background: radial-gradient(circle at 50% 50%, rgba(213, 233, 193, 0.3) 0%, rgba(247, 251, 237, 0) 70%);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen items-center justify-between overflow-hidden">
+<!-- Top AppBar Suppressed per Shell Visibility & Relevance (The Filter) for Transactional/Focused screens -->
+<!-- Main Content Canvas -->
+<main class="relative flex-1 flex flex-col items-center justify-center w-full px-8 ambient-glow">
+<!-- Branding Container -->
+<div class="flex flex-col items-center text-center max-w-sm">
+<!-- Logo Icon with Material Symbols -->
+<div class="mb-8 w-20 h-20 flex items-center justify-center rounded-[24px] bg-primary text-on-primary shadow-xl shadow-primary/5">
+<span class="material-symbols-outlined !text-4xl" data-icon="inventory_2">inventory_2</span>
+</div>
+<!-- Brand Name -->
+<h1 class="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tighter leading-none mb-3">
+                Barangku
+            </h1>
+<!-- Tagline -->
+<p class="text-secondary text-lg md:text-xl font-medium tracking-tight opacity-90">
+                Inventori praktis untuk usaha sehari-hari
+            </p>
+</div>
+<!-- Decorative Organic Layering -->
+<div class="absolute inset-0 pointer-events-none -z-10">
+<!-- Subtle tonal shifts instead of borders -->
+<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-secondary-fixed/20 blur-[100px]"></div>
+<div class="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-primary-fixed/20 blur-[100px]"></div>
+</div>
+</main>
+<!-- Bottom Footer (Loading State) -->
+<footer class="pb-16 flex flex-col items-center">
+<!-- Loading Spinner / Indicator -->
+<div class="mb-4">
+<div class="w-6 h-6 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+</div>
+<!-- Loading Text -->
+<div class="flex items-center gap-2">
+<span class="text-on-surface-variant font-medium text-sm tracking-wide">
+                Menyiapkan data lokal...
+            </span>
+</div>
+<!-- Semantic Mapping Check: 
+             BottomNavBar is suppressed here as this is an onboarding/focused splash journey. 
+             (Rule: Automatic Suppression for transactional/onboarding flows) 
+        -->
+</footer>
+<!-- Image for Context/Atmosphere (Hidden but defined for system requirements) -->
+<div class="sr-only">
+<img alt="Aesthetic Background" data-alt="Soft ethereal background with smooth gradients of olive green and cream, evoking a sense of calm and professional organization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0Sdpl1MqqP_SSy0kxV-FSsXs0aUrvAEOUJh_EM_ee1gt2lCt_Cr4wK0_8p68UgM2-cUcnAa6xNfeBWU2Vcs66SG-kfIm0ohrfirR6tvsTpeSq4g440cja7TajWNLqLueIG19asOvzA8XPEz49tT1sJabUYuVoEWBLIw-FRZKfLkNNNTTviaP_hJLnMaVDe63450VlHz-KaM2EehZNXCBZ-j_j1_Nc6KQrmGjaPKj7mlURoxUEhkFy-OChdi0_F6QpmDXyuyKnfI4"/>
+</div>
+</body></html>
