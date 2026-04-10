@@ -15,7 +15,7 @@ const PROJECT_ID = "15147750021271444984";
 const OUTPUT_DIR = "stitch_output";
 
 const SCREENS = [
-  { name: "Onboarding Screen", id: "80be83819b074c76b22ce23efb079c89" },
+  { name: "Registrasi Lokal", id: "c264df24ae9246e99f4e6016a522b7ac" },
 ];
 
 // Accept API key from CLI argument if provided
