@@ -15,7 +15,7 @@ const PROJECT_ID = "15147750021271444984";
 const OUTPUT_DIR = "stitch_output";
 
 const SCREENS = [
-  { name: "Splash Screen", id: "1bbf5bbaf6c64c648723a846ade19082" },
+  { name: "Masuk", id: "4e28eb3f5fd84674a32ccca8ef15f025" },
 ];
 
 // Accept API key from CLI argument if provided

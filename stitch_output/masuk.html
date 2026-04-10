@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Barangku - Masuk</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#576848",
+                        "on-primary-container": "#def1cd",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c5c8bd",
+                        "inverse-on-surface": "#eef2e5",
+                        "on-secondary-fixed-variant": "#3b4b2e",
+                        "secondary-fixed": "#d5e9c1",
+                        "surface-dim": "#d7dccf",
+                        "on-surface": "#181d15",
+                        "on-primary-fixed": "#111f09",
+                        "on-error-container": "#93000a",
+                        "background": "#f7fbed",
+                        "outline": "#75786f",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f1f5e8",
+                        "surface-container-highest": "#e0e4d7",
+                        "secondary": "#536344",
+                        "surface-container-high": "#e5eadd",
+                        "tertiary": "#4a563f",
+                        "tertiary-fixed": "#dae7ca",
+                        "on-tertiary-fixed-variant": "#3f4a35",
+                        "primary-fixed-dim": "#baccaa",
+                        "surface-tint": "#536347",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#becbaf",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e0e4d7",
+                        "primary-container": "#5e6f52",
+                        "error-container": "#ffdad6",
+                        "surface": "#f7fbed",
+                        "inverse-surface": "#2d3229",
+                        "secondary-container": "#d3e6be",
+                        "on-surface-variant": "#444840",
+                        "on-background": "#181d15",
+                        "tertiary-container": "#626e56",
+                        "surface-container": "#ebf0e2",
+                        "on-secondary-fixed": "#111f06",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d5e9c5",
+                        "primary": "#46573b",
+                        "on-primary-fixed-variant": "#3b4b31",
+                        "surface-bright": "#f7fbed",
+                        "on-tertiary-fixed": "#141e0c",
+                        "inverse-primary": "#baccaa",
+                        "secondary-fixed-dim": "#bacda6",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#e3f0d2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center justify-between selection:bg-secondary-container">
+<!-- Top AppBar Strategy (Simplified for Login per Shell Visibility Rule) -->
+<header class="fixed top-0 w-full z-50 flex justify-center items-center px-5 py-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-xl" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<span class="text-xl font-bold text-primary tracking-tighter">Barangku</span>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 w-full max-w-md flex flex-col justify-center px-8 pt-24 pb-12">
+<div class="space-y-2 mb-10 text-center">
+<h1 class="text-3xl font-extrabold tracking-tight text-on-surface">Selamat Datang</h1>
+<p class="text-secondary font-medium">Kelola inventaris dengan tenang dan teratur.</p>
+</div>
+<form class="space-y-6">
+<!-- Username Input -->
+<div class="space-y-1.5">
+<label class="label-md uppercase tracking-widest text-[10px] font-bold text-on-surface-variant ml-1" for="username">Username</label>
+<div class="relative group">
+<input class="w-full h-14 px-4 bg-surface-container-highest rounded-[14px] border-none focus:ring-2 focus:ring-primary/40 transition-all duration-200 placeholder:text-outline/60 text-on-surface" id="username" placeholder="Masukkan nama pengguna" type="text"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-1.5">
+<div class="flex justify-between items-end px-1">
+<label class="label-md uppercase tracking-widest text-[10px] font-bold text-on-surface-variant" for="password">Kata sandi</label>
+<a class="text-[11px] font-semibold text-primary hover:opacity-70 transition-opacity" href="#">Lupa kata sandi?</a>
+</div>
+<div class="relative group">
+<input class="w-full h-14 px-4 pr-12 bg-surface-container-highest rounded-[14px] border-none focus:ring-2 focus:ring-primary/40 transition-all duration-200 placeholder:text-outline/60 text-on-surface" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- CTA -->
+<div class="pt-4">
+<button class="w-full h-14 bg-primary-container text-on-primary-container font-bold rounded-[14px] shadow-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2" type="submit">
+                    Masuk
+                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</form>
+<div class="mt-12 text-center">
+<p class="text-on-surface-variant text-sm">Belum punya akun? <a class="text-primary font-bold" href="#">Daftar sekarang</a></p>
+</div>
+</main>
+<!-- Footer Area / Info Badge -->
+<footer class="w-full pb-10 flex justify-center px-8">
+<!-- Status Pebble -->
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-secondary-container/50 backdrop-blur-md rounded-full border border-outline-variant/10">
+<span class="material-symbols-outlined text-sm text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">database</span>
+<span class="text-[11px] font-bold uppercase tracking-wider text-on-secondary-container">Mode Lokal Aktif</span>
+</div>
+</footer>
+<!-- Background Decoration (Subtle Organic Blobs) -->
+<div class="fixed top-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary-container/20 blur-[120px] rounded-full -z-10"></div>
+<div class="fixed bottom-[-5%] left-[-5%] w-[40%] h-[40%] bg-primary-fixed-dim/20 blur-[100px] rounded-full -z-10"></div>
+</body></html>
