@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#576848",
+                    "on-primary-container": "#def1cd",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c5c8bd",
+                    "inverse-on-surface": "#eef2e5",
+                    "on-secondary-fixed-variant": "#3b4b2e",
+                    "secondary-fixed": "#d5e9c1",
+                    "surface-dim": "#d7dccf",
+                    "on-surface": "#181d15",
+                    "on-primary-fixed": "#111f09",
+                    "on-error-container": "#93000a",
+                    "background": "#f7fbed",
+                    "outline": "#75786f",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f1f5e8",
+                    "surface-container-highest": "#e0e4d7",
+                    "secondary": "#536344",
+                    "surface-container-high": "#e5eadd",
+                    "tertiary": "#4a563f",
+                    "tertiary-fixed": "#dae7ca",
+                    "on-tertiary-fixed-variant": "#3f4a35",
+                    "primary-fixed-dim": "#baccaa",
+                    "surface-tint": "#536347",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#becbaf",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e0e4d7",
+                    "primary-container": "#5e6f52",
+                    "error-container": "#ffdad6",
+                    "surface": "#f7fbed",
+                    "inverse-surface": "#2d3229",
+                    "secondary-container": "#d3e6be",
+                    "on-surface-variant": "#444840",
+                    "on-background": "#181d15",
+                    "tertiary-container": "#626e56",
+                    "surface-container": "#ebf0e2",
+                    "on-secondary-fixed": "#111f06",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#d5e9c5",
+                    "primary": "#46573b",
+                    "on-primary-fixed-variant": "#3b4b31",
+                    "surface-bright": "#f7fbed",
+                    "on-tertiary-fixed": "#141e0c",
+                    "inverse-primary": "#baccaa",
+                    "secondary-fixed-dim": "#bacda6",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#e3f0d2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .success-glow {
+            background: radial-gradient(circle at center, #d3e6be 0%, transparent 70%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center justify-center overflow-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Ambient Background Texture -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<div class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] rounded-full bg-secondary-container/20 blur-[120px]"></div>
+<div class="absolute bottom-[-5%] left-[-10%] w-[500px] h-[500px] rounded-full bg-primary-fixed/30 blur-[140px]"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full max-w-md px-8 py-12 flex flex-col items-center text-center">
+<!-- Logo Branding (Top Anchor) -->
+<div class="mb-16">
+<span class="text-2xl font-bold text-primary tracking-tighter">Barangku</span>
+</div>
+<!-- Success Visual Container -->
+<div class="relative w-32 h-32 mb-10 flex items-center justify-center">
+<!-- Decorative concentric circles for "archivist" feel -->
+<div class="absolute inset-0 rounded-full border border-outline-variant/20 scale-150"></div>
+<div class="absolute inset-0 rounded-full border border-outline-variant/40 scale-125"></div>
+<!-- Icon Container -->
+<div class="w-24 h-24 rounded-full bg-surface-container-lowest shadow-[0_16px_32px_rgba(70,87,59,0.08)] flex items-center justify-center relative overflow-hidden group">
+<div class="absolute inset-0 bg-secondary-container/10"></div>
+<span class="material-symbols-outlined text-6xl text-[#6F8A5B]" data-icon="check_circle" style="font-variation-settings: 'FILL' 0, 'wght' 200;">
+                    check_circle
+                </span>
+</div>
+</div>
+<!-- Typography Cluster -->
+<div class="space-y-4 mb-12">
+<h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight">
+                Akun berhasil dibuat
+            </h1>
+<p class="text-lg text-on-surface-variant leading-relaxed font-normal px-4">
+                Sekarang Anda bisa masuk dan mulai mencatat barang dengan tenang.
+            </p>
+</div>
+<!-- Action Section -->
+<div class="w-full space-y-6">
+<button class="w-full py-4 px-6 bg-primary-container text-on-primary-container font-semibold rounded-[14px] shadow-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200">
+                Masuk Sekarang
+            </button>
+<div class="flex items-center justify-center pt-4">
+<div class="flex items-center space-x-2 text-on-secondary-container/60">
+<span class="material-symbols-outlined text-sm" data-icon="verified_user">verified_user</span>
+<span class="text-[10px] uppercase tracking-[0.15em] font-bold">Data Anda Aman Terenkripsi</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Content Card / Abstract Visual (Bento-style element) -->
+<div class="fixed bottom-12 right-12 hidden lg:block w-72 h-48 rounded-[24px] bg-surface-container-lowest/40 backdrop-blur-md p-6 shadow-[0_24px_48px_rgba(0,0,0,0.02)] border border-outline-variant/10">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30"></div>
+<div class="h-2 w-16 bg-outline-variant/30 rounded-full"></div>
+</div>
+<div class="space-y-3">
+<div class="h-4 w-full bg-surface-container-highest rounded-full"></div>
+<div class="h-4 w-3/4 bg-surface-container-highest rounded-full"></div>
+<div class="h-4 w-1/2 bg-surface-container-highest rounded-full"></div>
+</div>
+<div class="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="inventory_2">inventory_2</span>
+</div>
+</div>
+<!-- Background Decorative Element -->
+<div class="fixed top-20 left-20 hidden md:block opacity-20 pointer-events-none">
+<img alt="Calm minimal desk" class="w-64 h-64 object-cover rounded-[32px] grayscale sepia-[0.2]" data-alt="Minimal aesthetic overhead shot of a clean white desk with a small plant and an open notebook, soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrToPrwIsJdcR04d1vMnlOACmRTSqC6Tyzou7s_GgcI9M4bignPImJ9MLVs3d990NAwtPcrfMc0OrF3Mwpyk1IwpIZzYo6MPkBgHfzOdSLyZPA0LC4UgH_Y8BkdDMof1CwhH235dFuNGEzA65P1fl5Uc0iKNGPTZnnlZM8Rgs2CsIdY3kkm3HMh3KHIKo1GLfB1Q9NKj5frg7bt1TMKSpWZ9RkvFWon6XFjcpsQBy8OoV0gd-ejTPPkgDt-4O29ru1CbHKG73U0LM"/>
+</div>
+</body></html>

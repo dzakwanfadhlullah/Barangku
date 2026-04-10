@@ -15,7 +15,7 @@ const PROJECT_ID = "15147750021271444984";
 const OUTPUT_DIR = "stitch_output";
 
 const SCREENS = [
-  { name: "Registrasi Lokal", id: "c264df24ae9246e99f4e6016a522b7ac" },
+  { name: "Pendaftaran Berhasil", id: "6da24bcd9e1849c0a18ca5aa1ffdeaa5" },
 ];
 
 // Accept API key from CLI argument if provided
