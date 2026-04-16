@@ -163,7 +163,7 @@ class VerificationScreen extends StatelessWidget {
 
             AppButton(
               text: 'Verifikasi',
-              icon: LucideIcons.badgeCheck,
+              icon: const Icon(LucideIcons.badgeCheck, size: 20),
               onPressed: () {
                 context.push('/forgot-password/reset');
               },

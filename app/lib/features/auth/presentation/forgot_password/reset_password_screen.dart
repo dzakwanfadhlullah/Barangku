@@ -32,7 +32,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(28),
                 ),
                 child: const Icon(
-                  LucideIcons.lockKeyhole, 
+                  LucideIcons.lock, 
                   color: AppColors.olive700,
                   size: 36,
                 ),
@@ -116,7 +116,7 @@ class ResetPasswordScreen extends StatelessWidget {
             // Primary Action
             AppButton(
               text: 'Simpan kata sandi',
-              icon: LucideIcons.arrowRight,
+              icon: const Icon(LucideIcons.arrowRight, size: 20),
               onPressed: () {
                 // Return to login success
                 context.go('/login');

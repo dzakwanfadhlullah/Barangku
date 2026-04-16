@@ -15,7 +15,11 @@ const PROJECT_ID = "15147750021271444984";
 const OUTPUT_DIR = "stitch_output";
 
 const SCREENS = [
-  { name: "Pendaftaran Berhasil", id: "6da24bcd9e1849c0a18ca5aa1ffdeaa5" },
+  { name: "Lupa Kata Sandi", id: "a06792cd59bc40e6acfd7ec22acac17b" },
+  { name: "Verifikasi Akun", id: "cd6269f5795e4fd985217973fa99917c" },
+  { name: "Atur Kata Sandi Baru", id: "f0117312f0d54d06a27dde08b308a9c1" },
+  { name: "Profil", id: "82f3d595028243fd936dcba83b7dbd1b" },
+  { name: "Pengaturan Akun", id: "2cbc3acf34224928bc47a5f8a565ffd5" }
 ];
 
 // Accept API key from CLI argument if provided

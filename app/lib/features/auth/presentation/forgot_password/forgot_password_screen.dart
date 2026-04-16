@@ -67,7 +67,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             const SizedBox(height: AppSpacing.l),
             AppButton(
               text: 'Lanjutkan',
-              icon: LucideIcons.chevronRight,
+              icon: const Icon(LucideIcons.chevronRight, size: 20),
               onPressed: () {
                 context.push('/forgot-password/verify');
               },
