@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // Placeholder for Forgot Password flow
+                  context.push('/forgot-password');
                 },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
