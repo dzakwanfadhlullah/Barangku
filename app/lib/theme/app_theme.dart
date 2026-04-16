@@ -19,8 +19,6 @@ class AppTheme {
         onSurface: AppColors.softCharcoal,
         error: AppColors.error,
         onError: Colors.white,
-        background: AppColors.warmBackground,
-        onBackground: AppColors.softCharcoal,
       ),
       scaffoldBackgroundColor: AppColors.warmBackground,
       textTheme: TextTheme(
@@ -63,7 +61,7 @@ class AppTheme {
         filled: true,
         fillColor: Colors.white,
         contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        hintStyle: AppTextStyles.bodyMd.copyWith(color: AppColors.neutralDivider.withOpacity(0.8)),
+        hintStyle: AppTextStyles.bodyMd.copyWith(color: AppColors.neutralDivider.withValues(alpha: 0.8)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.m),
           borderSide: const BorderSide(color: AppColors.neutralDivider),

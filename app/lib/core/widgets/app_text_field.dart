@@ -55,7 +55,7 @@ class AppTextFieldState extends State<AppTextField> {
             helperText: widget.helperText,
             helperMaxLines: 2,
             helperStyle: AppTextStyles.bodySm.copyWith(
-              color: AppColors.neutralDivider.withOpacity(0.9), // subtle helper text
+              color: AppColors.neutralDivider.withValues(alpha: 0.9), // subtle helper text
             ),
             suffixIcon: widget.isPassword
                 ? IconButton(

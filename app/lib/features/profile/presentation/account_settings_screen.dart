@@ -27,7 +27,7 @@ class AccountSettingsScreen extends StatelessWidget {
                     width: 96,
                     height: 96,
                     decoration: BoxDecoration(
-                      color: AppColors.sage300.withOpacity(0.2),
+                      color: AppColors.sage300.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(32),
                     ),
                     child: const Icon(
@@ -55,7 +55,7 @@ class AccountSettingsScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
-                      color: AppColors.sage300.withOpacity(0.3),
+                      color: AppColors.sage300.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: Row(
@@ -102,7 +102,7 @@ class AccountSettingsScreen extends StatelessWidget {
                 title: 'Keluar',
                 titleColor: AppColors.error,
                 iconColor: AppColors.error,
-                iconBgColor: AppColors.error.withOpacity(0.1),
+                iconBgColor: AppColors.error.withValues(alpha: 0.1),
                 hideArrow: true,
                 showBorder: false,
                 onTap: () => context.go('/login'),
@@ -118,7 +118,7 @@ class AccountSettingsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(28),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.olive700.withOpacity(0.3),
+                    color: AppColors.olive700.withValues(alpha: 0.3),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -133,7 +133,7 @@ class AccountSettingsScreen extends StatelessWidget {
                         width: 6,
                         height: 24,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.5),
+                          color: Colors.white.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
@@ -148,7 +148,7 @@ class AccountSettingsScreen extends StatelessWidget {
                   Text(
                     'Data inventaris Anda disimpan secara lokal dan dienkripsi. Kami tidak pernah mengunggah informasi barang ke server tanpa persetujuan Anda.',
                     style: AppTextStyles.bodySm.copyWith(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       height: 1.5,
                     ),
                   ),
@@ -188,7 +188,7 @@ class AccountSettingsScreen extends StatelessWidget {
       child: Text(
         title,
         style: AppTextStyles.bodySm.copyWith(
-          color: AppColors.warmMutedGray.withOpacity(0.8),
+          color: AppColors.warmMutedGray.withValues(alpha: 0.8),
           fontWeight: FontWeight.w700,
           letterSpacing: 1.5,
           fontSize: 11,
@@ -204,7 +204,7 @@ class AccountSettingsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.softCharcoal.withOpacity(0.02),
+            color: AppColors.softCharcoal.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -233,7 +233,7 @@ class AccountSettingsScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.l, vertical: AppSpacing.m),
         decoration: BoxDecoration(
           border: showBorder
-              ? Border(bottom: BorderSide(color: AppColors.neutralDivider.withOpacity(0.5)))
+              ? Border(bottom: BorderSide(color: AppColors.neutralDivider.withValues(alpha: 0.5)))
               : null,
         ),
         child: Row(
@@ -241,7 +241,7 @@ class AccountSettingsScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: iconBgColor ?? AppColors.sage300.withOpacity(0.15),
+                color: iconBgColor ?? AppColors.sage300.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, color: iconColor ?? AppColors.olive700, size: 20),

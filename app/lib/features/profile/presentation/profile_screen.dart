@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.softCharcoal.withOpacity(0.04),
+                      color: AppColors.softCharcoal.withValues(alpha: 0.04),
                       blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
@@ -79,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                       decoration: BoxDecoration(
-                        color: AppColors.sage300.withOpacity(0.3),
+                        color: AppColors.sage300.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: Text(
@@ -118,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                       iconColor: Colors.white,
                       bgColor: AppColors.olive700,
                       valueColor: Colors.white,
-                      titleColor: Colors.white.withOpacity(0.7),
+                      titleColor: Colors.white.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
@@ -173,7 +173,7 @@ class ProfileScreen extends StatelessWidget {
                   title: 'Keluar',
                   titleColor: AppColors.error,
                   iconColor: AppColors.error,
-                  iconBgColor: AppColors.error.withOpacity(0.1),
+                  iconBgColor: AppColors.error.withValues(alpha: 0.1),
                   showBorder: false,
                   hideArrow: true,
                   onTap: () => context.go('/login'),
@@ -185,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Text(
                   'Barangku v2.4.0 (Stable)',
                   style: AppTextStyles.bodySm.copyWith(
-                    color: AppColors.warmMutedGray.withOpacity(0.6),
+                    color: AppColors.warmMutedGray.withValues(alpha: 0.6),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -221,7 +221,7 @@ class ProfileScreen extends StatelessWidget {
         boxShadow: [
           if (bgColor == Colors.white)
             BoxShadow(
-              color: AppColors.softCharcoal.withOpacity(0.04),
+              color: AppColors.softCharcoal.withValues(alpha: 0.04),
               blurRadius: 16,
               offset: const Offset(0, 4),
             ),
@@ -259,7 +259,7 @@ class ProfileScreen extends StatelessWidget {
       child: Text(
         title,
         style: AppTextStyles.bodySm.copyWith(
-          color: AppColors.warmMutedGray.withOpacity(0.8),
+          color: AppColors.warmMutedGray.withValues(alpha: 0.8),
           fontWeight: FontWeight.w700,
           letterSpacing: 1.5,
           fontSize: 11,
@@ -275,7 +275,7 @@ class ProfileScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.softCharcoal.withOpacity(0.02),
+            color: AppColors.softCharcoal.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -305,7 +305,7 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.l, vertical: AppSpacing.m),
         decoration: BoxDecoration(
           border: showBorder
-              ? Border(bottom: BorderSide(color: AppColors.neutralDivider.withOpacity(0.5)))
+              ? Border(bottom: BorderSide(color: AppColors.neutralDivider.withValues(alpha: 0.5)))
               : null,
         ),
         child: Row(
@@ -313,7 +313,7 @@ class ProfileScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: iconBgColor ?? AppColors.sage300.withOpacity(0.15),
+                color: iconBgColor ?? AppColors.sage300.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, color: iconColor ?? AppColors.olive700, size: 20),

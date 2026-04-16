@@ -18,11 +18,11 @@ class AppBottomNav extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 24),
       decoration: BoxDecoration(
-        color: AppColors.warmSurface.withOpacity(0.9),
+        color: AppColors.warmSurface.withValues(alpha: 0.9),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.softCharcoal.withOpacity(0.05),
+            color: AppColors.softCharcoal.withValues(alpha: 0.05),
             blurRadius: 32,
             offset: const Offset(0, -4),
           ),

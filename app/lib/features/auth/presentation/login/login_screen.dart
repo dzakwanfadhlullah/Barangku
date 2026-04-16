@@ -51,7 +51,7 @@ class LoginScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.sage300.withOpacity(0.2),
+                  color: AppColors.sage300.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: Row(

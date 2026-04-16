@@ -25,9 +25,9 @@ class VerificationScreen extends StatelessWidget {
             Container(
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.sage300.withOpacity(0.15),
+                color: AppColors.sage300.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: AppColors.neutralDivider.withOpacity(0.5)),
+                border: Border.all(color: AppColors.neutralDivider.withValues(alpha: 0.5)),
               ),
               child: const Center(
                 child: Icon(
@@ -47,7 +47,7 @@ class VerificationScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.softCharcoal.withOpacity(0.03),
+                    color: AppColors.softCharcoal.withValues(alpha: 0.03),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -59,7 +59,7 @@ class VerificationScreen extends StatelessWidget {
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: AppColors.olive700.withOpacity(0.1),
+                      color: AppColors.olive700.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(LucideIcons.user, color: AppColors.olive700),

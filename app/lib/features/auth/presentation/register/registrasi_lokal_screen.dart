@@ -25,9 +25,9 @@ class RegistrasiLokalScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppSpacing.m),
               decoration: BoxDecoration(
-                color: AppColors.info.withOpacity(0.1),
+                color: AppColors.info.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.info.withOpacity(0.2)),
+                border: Border.all(color: AppColors.info.withValues(alpha: 0.2)),
               ),
               child: Row(
                 children: [

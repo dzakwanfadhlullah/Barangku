@@ -31,7 +31,7 @@ class OnboardingScreen extends StatelessWidget {
                       color: AppColors.warmBackground,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: AppColors.sage300.withOpacity(0.5),
+                        color: AppColors.sage300.withValues(alpha: 0.5),
                         width: 2,
                       ),
                     ),

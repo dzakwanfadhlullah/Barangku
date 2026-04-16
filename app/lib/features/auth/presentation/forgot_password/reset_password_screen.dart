@@ -28,7 +28,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppColors.warmMutedGray.withOpacity(0.1),
+                  color: AppColors.warmMutedGray.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(28),
                 ),
                 child: const Icon(
@@ -78,7 +78,7 @@ class ResetPasswordScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppSpacing.m),
               decoration: BoxDecoration(
-                color: AppColors.sage300.withOpacity(0.2),
+                color: AppColors.sage300.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Row(
