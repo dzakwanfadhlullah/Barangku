@@ -113,7 +113,7 @@ class LoginScreen extends StatelessWidget {
             AppButton(
               text: 'Masuk',
               onPressed: () {
-                // Placeholder for actual login logic (navigation UI only for now)
+                context.go('/beranda');
               },
             ),
             const SizedBox(height: AppSpacing.l),
