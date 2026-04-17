@@ -195,12 +195,6 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: AppBottomNav(
-        currentIndex: 3, 
-        onTap: (index) {
-          // Placeholder behavior
-        },
-      ),
     );
   }
 
