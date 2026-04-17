@@ -40,8 +40,8 @@ class AppBottomNav extends StatelessWidget {
           _buildNavItem(
             context: context,
             index: 1,
-            icon: LucideIcons.packageSearch,
-            label: 'KOLEKSI',
+            icon: LucideIcons.package,
+            label: 'BARANG',
           ),
           _buildNavItem(
             context: context,
