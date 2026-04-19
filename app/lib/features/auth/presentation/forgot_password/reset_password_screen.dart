@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_scaffold.dart';
 import '../../../../../core/widgets/app_text_field.dart';
 import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_spacing.dart';
 import '../../../../../theme/app_text_styles.dart';
+import '../../providers/auth_provider.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ResetPasswordScreen extends HookConsumerWidget {
   const ResetPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final passwordController = useTextEditingController();
+    final confirmPasswordController = useTextEditingController();
+    final isLoading = useState(false);
+
+    final resetUsername = ref.read(resetUsernameProvider);
+
     return AppScaffold(
       showBackButton: true,
       body: SingleChildScrollView(
@@ -61,13 +70,15 @@ class ResetPasswordScreen extends StatelessWidget {
             const SizedBox(height: AppSpacing.xxl),
 
             // Form Fields
-            const AppTextField(
+            AppTextField(
+              controller: passwordController,
               label: 'Kata sandi baru',
               hintText: 'Minimal 8 karakter',
               isPassword: true,
             ),
             const SizedBox(height: AppSpacing.l),
-            const AppTextField(
+            AppTextField(
+              controller: confirmPasswordController,
               label: 'Konfirmasi kata sandi',
               hintText: 'Ulangi kata sandi',
               isPassword: true,
@@ -115,12 +126,50 @@ class ResetPasswordScreen extends StatelessWidget {
 
             // Primary Action
             AppButton(
-              text: 'Simpan kata sandi',
-              icon: const Icon(LucideIcons.arrowRight, size: 20),
-              onPressed: () {
-                // Return to login success
-                context.go('/login');
-              },
+              text: isLoading.value ? 'Menyimpan...' : 'Simpan kata sandi',
+              icon: isLoading.value ? null : const Icon(LucideIcons.arrowRight, size: 20),
+              onPressed: isLoading.value
+                  ? null
+                  : () async {
+                      if (resetUsername == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Sesi telah berakhir, ulangi dari awal')),
+                        );
+                        context.go('/login');
+                        return;
+                      }
+
+                      final pass = passwordController.text;
+                      final conf = confirmPasswordController.text;
+
+                      if (pass.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Masukkan kata sandi baru!')),
+                        );
+                        return;
+                      }
+
+                      if (pass != conf) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Konfirmasi kata sandi tidak cocok!')),
+                        );
+                        return;
+                      }
+
+                      isLoading.value = true;
+                      final repo = ref.read(authRepositoryProvider);
+                      await repo.updatePassword(resetUsername, pass);
+
+                      if (context.mounted) {
+                        isLoading.value = false;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Kata sandi berhasil diubah. Silakan masuk.')),
+                        );
+                        // Clear reset state
+                        ref.read(resetUsernameProvider.notifier).setUsername(null);
+                        context.go('/login');
+                      }
+                    },
             ),
 
             const SizedBox(height: AppSpacing.xxl),

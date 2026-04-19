@@ -1,18 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_scaffold.dart';
 import '../../../../../core/widgets/app_text_field.dart';
 import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_spacing.dart';
 import '../../../../../theme/app_text_styles.dart';
+import '../../providers/auth_provider.dart';
+import '../../data/models/user_model.dart';
 
-class VerificationScreen extends StatelessWidget {
+class VerificationScreen extends HookConsumerWidget {
   const VerificationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final answerController = useTextEditingController();
+    final isLoading = useState(false);
+    final isPageLoading = useState(true);
+    final userState = useState<UserModel?>(null);
+
+    final resetUsername = ref.read(resetUsernameProvider);
+
+    useEffect(() {
+      Future.microtask(() async {
+        if (resetUsername != null) {
+          final repo = ref.read(authRepositoryProvider);
+          final user = await repo.getUserByUsername(resetUsername);
+          userState.value = user;
+        }
+        isPageLoading.value = false;
+      });
+      return null;
+    }, []);
+
+    if (isPageLoading.value) {
+      return const AppScaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final user = userState.value;
+    if (user == null) {
+      return AppScaffold(
+        showBackButton: true,
+        body: Center(
+          child: Text('Data pengguna tidak ditemukan.', style: AppTextStyles.bodyLg),
+        ),
+      );
+    }
+
     return AppScaffold(
       showBackButton: true,
       title: 'Verifikasi Akun',
@@ -21,7 +60,7 @@ class VerificationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Safe conceptual hero banner (thesis ready, no random web images)
+            // Safe conceptual hero banner
             Container(
               height: 120,
               decoration: BoxDecoration(
@@ -80,11 +119,11 @@ class VerificationScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'Andi Wijaya', // Mock data
+                          user.name,
                           style: AppTextStyles.h3.copyWith(fontSize: 16),
                         ),
                         Text(
-                          'andi.w@example.com',
+                          '@${user.username}',
                           style: AppTextStyles.bodyMd.copyWith(color: AppColors.warmMutedGray),
                         ),
                       ],
@@ -128,11 +167,12 @@ class VerificationScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.s),
                   Text(
-                    'Apa nama hewan peliharaan pertama Anda?',
+                    user.securityQuestion,
                     style: AppTextStyles.h3.copyWith(fontSize: 18),
                   ),
                   const SizedBox(height: AppSpacing.l),
-                  const AppTextField(
+                  AppTextField(
+                    controller: answerController,
                     label: 'Jawaban',
                     hintText: 'Ketik jawaban Anda di sini...',
                   ),
@@ -162,11 +202,34 @@ class VerificationScreen extends StatelessWidget {
             const SizedBox(height: AppSpacing.xxl),
 
             AppButton(
-              text: 'Verifikasi',
-              icon: const Icon(LucideIcons.badgeCheck, size: 20),
-              onPressed: () {
-                context.push('/forgot-password/reset');
-              },
+              text: isLoading.value ? 'Memverifikasi...' : 'Verifikasi',
+              icon: isLoading.value ? null : const Icon(LucideIcons.badgeCheck, size: 20),
+              onPressed: isLoading.value
+                  ? null
+                  : () async {
+                      final answer = answerController.text.trim();
+                      if (answer.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Tolong masukkan jawaban!')),
+                        );
+                        return;
+                      }
+
+                      isLoading.value = true;
+                      final repo = ref.read(authRepositoryProvider);
+                      final isValid = await repo.verifySecurityAnswer(user.username, answer);
+
+                      if (context.mounted) {
+                        isLoading.value = false;
+                        if (isValid) {
+                          context.push('/forgot-password/reset');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Jawaban salah!')),
+                          );
+                        }
+                      }
+                    },
             ),
             const SizedBox(height: AppSpacing.m),
             

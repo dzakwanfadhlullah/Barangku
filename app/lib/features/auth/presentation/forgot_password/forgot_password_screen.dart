@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_scaffold.dart';
 import '../../../../../core/widgets/app_text_field.dart';
 import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_spacing.dart';
 import '../../../../../theme/app_text_styles.dart';
+import '../../providers/auth_provider.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
+class ForgotPasswordScreen extends HookConsumerWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final usernameController = useTextEditingController();
+    final isLoading = useState(false);
+
     return AppScaffold(
       showBackButton: true,
       body: SingleChildScrollView(
@@ -32,7 +38,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(28),
                 ),
                 child: const Icon(
-                  LucideIcons.listRestart, // Using Lucide equivalent of lock_reset
+                  LucideIcons.listRestart,
                   color: AppColors.olive700,
                   size: 36,
                 ),
@@ -60,17 +66,43 @@ class ForgotPasswordScreen extends StatelessWidget {
             const SizedBox(height: AppSpacing.xxl),
 
             // Form Section
-            const AppTextField(
+            AppTextField(
+              controller: usernameController,
               label: 'Username',
               hintText: 'Contoh: budi_arsip',
             ),
             const SizedBox(height: AppSpacing.l),
             AppButton(
-              text: 'Lanjutkan',
-              icon: const Icon(LucideIcons.chevronRight, size: 20),
-              onPressed: () {
-                context.push('/forgot-password/verify');
-              },
+              text: isLoading.value ? 'Memeriksa...' : 'Lanjutkan',
+              icon: isLoading.value ? null : const Icon(LucideIcons.chevronRight, size: 20),
+              onPressed: isLoading.value
+                  ? null
+                  : () async {
+                      final username = usernameController.text.trim();
+                      if (username.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Tolong masukkan username Anda!')),
+                        );
+                        return;
+                      }
+
+                      isLoading.value = true;
+                      final repo = ref.read(authRepositoryProvider);
+                      final user = await repo.getUserByUsername(username);
+
+                      if (context.mounted) {
+                        isLoading.value = false;
+                        if (user != null) {
+                          // Save target username
+                          ref.read(resetUsernameProvider.notifier).setUsername(user.username);
+                          context.push('/forgot-password/verify');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Username tidak ditemukan di perangkat ini!')),
+                          );
+                        }
+                      }
+                    },
             ),
             
             const SizedBox(height: AppSpacing.xxxl),
