@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_spacing.dart';
 import '../../../../theme/app_text_styles.dart';
+import '../providers/inventory_provider.dart';
+import '../data/models/item_model.dart';
+import 'package:intl/intl.dart';
 
-class DaftarBarangScreen extends StatelessWidget {
+// No StateProvider needed, using useState locally
+
+class DaftarBarangScreen extends HookConsumerWidget {
   const DaftarBarangScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Memastikan data dimuat pertama kali
+    useEffect(() {
+      Future.microtask(() => ref.read(inventoryProvider.notifier).loadItems());
+      return null;
+    }, []);
+
+    final itemsState = ref.watch(inventoryProvider);
+    final searchQuery = useState<String>('');
+
     return Scaffold(
       backgroundColor: AppColors.warmBackground,
       appBar: AppBar(
@@ -19,11 +35,11 @@ class DaftarBarangScreen extends StatelessWidget {
         titleSpacing: 20,
         title: Text(
           'Daftar Barang',
-          style: AppTextStyles.h2.copyWith(color: AppColors.olive900),
+          style: AppTextStyles.h2.copyWith(color: AppColors.olive700),
         ),
         actions: [
           IconButton(
-            icon: const Icon(LucideIcons.barcode, color: AppColors.olive700),
+            icon: const Icon(LucideIcons.qrCode, color: AppColors.olive700),
             onPressed: () {},
           ),
           IconButton(
@@ -62,6 +78,7 @@ class DaftarBarangScreen extends StatelessWidget {
               children: [
                 TextField(
                   style: AppTextStyles.bodyMd,
+                  onChanged: (val) => searchQuery.value = val,
                   decoration: InputDecoration(
                     hintText: 'Cari nama barang, kode SKU...',
                     hintStyle: AppTextStyles.bodyMd.copyWith(color: AppColors.warmMutedGray),
@@ -88,13 +105,13 @@ class DaftarBarangScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      _buildFilterChip('Semua (1.248)', isSelected: true),
+                      _buildFilterChip('Semua', isSelected: true),
                       const SizedBox(width: 8),
-                      _buildFilterChip('Sembako (450)'),
+                      _buildFilterChip('Sembako'),
                       const SizedBox(width: 8),
-                      _buildFilterChip('Minuman (300)'),
+                      _buildFilterChip('Minuman'),
                       const SizedBox(width: 8),
-                      _buildFilterChip('Snack (210)'),
+                      _buildFilterChip('Snack'),
                     ],
                   ),
                 ),
@@ -103,22 +120,29 @@ class DaftarBarangScreen extends StatelessWidget {
           ),
           
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.only(top: AppSpacing.m, bottom: 100), // padding for FAB
-              itemCount: 5,
-              separatorBuilder: (context, index) => const SizedBox(height: 8),
-              itemBuilder: (context, index) {
-                // Mock Data Pattern
-                final items = [
-                  {'name': 'Minyak Goreng 2L', 'sku': 'SKU-001A', 'stock': '15 Botol', 'price': 'Rp 34.000', 'status': 'Aman'},
-                  {'name': 'Beras Pandan Wangi 5kg', 'sku': 'SKU-BM02', 'stock': '1 Karung', 'price': 'Rp 75.000', 'status': 'Menipis'},
-                  {'name': 'Indomie Goreng Reguler', 'sku': 'SKU-IN23', 'stock': '120 Bungkus', 'price': 'Rp 3.000', 'status': 'Aman'},
-                  {'name': 'Kopi Kapal Api 165gr', 'sku': 'SKU-KP01', 'stock': '30 Pcs', 'price': 'Rp 14.500', 'status': 'Aman'},
-                  {'name': 'Gula Pasir Kuning 1kg', 'sku': 'SKU-GP01', 'stock': '45 Kg', 'price': 'Rp 16.000', 'status': 'Aman'},
-                ];
-                
-                final item = items[index];
-                return _buildItemCard(context, item);
+            child: itemsState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, st) => Center(child: Text('Terjadi kesalahan: $e')),
+              data: (items) {
+                // Filter
+                final filtered = items.where((item) {
+                  final q = searchQuery.value.toLowerCase();
+                  return item.name.toLowerCase().contains(q) || (item.sku?.toLowerCase().contains(q) ?? false);
+                }).toList();
+
+                if (filtered.isEmpty) {
+                  return const Center(child: Text('Belum ada barang.'));
+                }
+
+                return ListView.separated(
+                  padding: const EdgeInsets.only(top: AppSpacing.m, bottom: 100), // padding for FAB
+                  itemCount: filtered.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: 8),
+                  itemBuilder: (context, index) {
+                    final item = filtered[index];
+                    return _buildItemCard(context, ref, item);
+                  },
+                );
               },
             ),
           ),
@@ -145,11 +169,12 @@ class DaftarBarangScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemCard(BuildContext context, Map<String, String> item) {
-    bool isLowStock = item['status'] == 'Menipis';
+  Widget _buildItemCard(BuildContext context, WidgetRef ref, ItemModel item) {
+    bool isLowStock = item.initialStock <= 5;
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
     
     return InkWell(
-      onTap: () => context.push('/barang/detail'),
+      onTap: () => context.push('/barang/detail', extra: item),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: AppSpacing.l),
         padding: const EdgeInsets.all(AppSpacing.m),
@@ -186,51 +211,131 @@ class DaftarBarangScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          item['name']!,
+                          item.name,
                           style: AppTextStyles.h3.copyWith(fontSize: 16),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Text(
-                        item['price']!,
+                        currencyFormat.format(item.price),
                         style: AppTextStyles.h3.copyWith(fontSize: 14, color: AppColors.olive700),
                       ),
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    item['sku']!,
-                    style: AppTextStyles.bodySm.copyWith(
-                      color: AppColors.warmMutedGray,
-                      fontSize: 11,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: isLowStock ? AppColors.errorContainer : AppColors.sage300.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          'Sisa: ${item['stock']}',
-                          style: AppTextStyles.bodySm.copyWith(
-                            color: isLowStock ? AppColors.error : AppColors.olive700,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 10,
-                          ),
+                      Text(
+                        item.sku ?? 'Tanpa SKU',
+                        style: AppTextStyles.bodySm.copyWith(
+                          color: AppColors.warmMutedGray,
+                          fontSize: 11,
                         ),
                       ),
+                      // Trigger untuk Popup
+                      InkWell(
+                        onTap: () => _showQuickStockPopup(context, ref, item),
+                        child: Icon(LucideIcons.listPlus, size: 18, color: AppColors.olive700),
+                      ),
                     ],
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: isLowStock ? AppColors.error.withValues(alpha: 0.1) : AppColors.sage300.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'Sisa: ${item.initialStock} ${item.unit ?? ''}',
+                      style: AppTextStyles.bodySm.copyWith(
+                        color: isLowStock ? AppColors.error : AppColors.olive700,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 10,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showQuickStockPopup(BuildContext context, WidgetRef ref, ItemModel item) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return Padding(
+          padding: const EdgeInsets.all(AppSpacing.xl),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text('Penyesuaian Stok Cepat', style: AppTextStyles.h2),
+              const SizedBox(height: AppSpacing.s),
+              Text(item.name, style: AppTextStyles.bodyLg.copyWith(color: AppColors.warmMutedGray)),
+              const SizedBox(height: AppSpacing.xxl),
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _PopupActionBtn(
+                    icon: LucideIcons.minus,
+                    onTap: () {
+                      if (item.initialStock > 0) {
+                        ref.read(inventoryProvider.notifier).adjustStock(item, -1);
+                        Navigator.pop(ctx);
+                      }
+                    },
+                  ),
+                  const SizedBox(width: AppSpacing.xl),
+                  Text('${item.initialStock}', style: AppTextStyles.h1.copyWith(fontSize: 32)),
+                  const SizedBox(width: AppSpacing.xl),
+                  _PopupActionBtn(
+                    icon: LucideIcons.plus,
+                    onTap: () {
+                      ref.read(inventoryProvider.notifier).adjustStock(item, 1);
+                      Navigator.pop(ctx);
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xxl),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _PopupActionBtn extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _PopupActionBtn({required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.sage300.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.olive700.withValues(alpha: 0.3)),
+        ),
+        child: Icon(icon, size: 32, color: AppColors.olive700),
       ),
     );
   }

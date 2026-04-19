@@ -20,6 +20,7 @@ import '../features/inventory/presentation/daftar_barang_screen.dart';
 import '../features/inventory/presentation/detail_barang_screen.dart';
 import '../features/inventory/presentation/tambah_barang_screen.dart';
 import '../features/inventory/presentation/ubah_barang_screen.dart';
+import '../features/inventory/data/models/item_model.dart';
 
 // Placeholder for missing feature
 class PlaceholderScreen extends StatelessWidget {
@@ -106,7 +107,7 @@ final appRouter = GoRouter(
               routes: [
                 GoRoute(
                   path: 'detail',
-                  builder: (context, state) => const DetailBarangScreen(),
+                  builder: (context, state) => DetailBarangScreen(item: state.extra as ItemModel),
                 ),
                 GoRoute(
                   path: 'tambah',
@@ -114,7 +115,7 @@ final appRouter = GoRouter(
                 ),
                 GoRoute(
                   path: 'ubah',
-                  builder: (context, state) => const UbahBarangScreen(),
+                  builder: (context, state) => UbahBarangScreen(item: state.extra as ItemModel),
                 ),
               ],
             ),

@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_spacing.dart';
 import '../../../../theme/app_text_styles.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_text_field.dart';
+import '../providers/inventory_provider.dart';
 
-class TambahBarangScreen extends StatelessWidget {
+class TambahBarangScreen extends HookConsumerWidget {
   const TambahBarangScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final nameController = useTextEditingController();
+    final skuController = useTextEditingController();
+    final categoryController = useTextEditingController();
+    final stockController = useTextEditingController();
+    final unitController = useTextEditingController();
+    final priceController = useTextEditingController();
+    final descController = useTextEditingController();
+    
+    final isLoading = useState(false);
+
     return AppScaffold(
       title: 'Tambah Barang',
       showBackButton: true,
@@ -48,7 +62,8 @@ class TambahBarangScreen extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.xxl),
 
-            const AppTextField(
+            AppTextField(
+              controller: nameController,
               label: 'Nama Barang',
               hintText: 'Cth: Minyak Goreng 2L',
             ),
@@ -58,6 +73,7 @@ class TambahBarangScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppTextField(
+                    controller: skuController,
                     label: 'SKU / Barcode',
                     hintText: 'Scan / ketik SKU',
                   ),
@@ -65,6 +81,7 @@ class TambahBarangScreen extends StatelessWidget {
                 const SizedBox(width: AppSpacing.m),
                 Expanded(
                   child: AppTextField(
+                    controller: categoryController,
                     label: 'Kategori',
                     hintText: 'Pilih kategori',
                   ),
@@ -77,6 +94,7 @@ class TambahBarangScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppTextField(
+                    controller: stockController,
                     label: 'Stok Awal',
                     hintText: '0',
                     keyboardType: TextInputType.number,
@@ -85,6 +103,7 @@ class TambahBarangScreen extends StatelessWidget {
                 const SizedBox(width: AppSpacing.m),
                 Expanded(
                   child: AppTextField(
+                    controller: unitController,
                     label: 'Satuan',
                     hintText: 'Pcs, Kg, L...',
                   ),
@@ -93,14 +112,16 @@ class TambahBarangScreen extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.l),
 
-            const AppTextField(
+            AppTextField(
+              controller: priceController,
               label: 'Harga Jual',
-              hintText: 'Rp 0',
+              hintText: 'Ribuan (Cth: 15000)',
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: AppSpacing.l),
 
-            const AppTextField(
+            AppTextField(
+              controller: descController,
               label: 'Deskripsi (Opsional)',
               hintText: 'Tambahkan detail barang',
             ),
@@ -108,12 +129,40 @@ class TambahBarangScreen extends StatelessWidget {
             const SizedBox(height: AppSpacing.xxxl),
             
             AppButton(
-              text: 'Simpan Barang',
-              icon: const Icon(LucideIcons.save, size: 20),
-              onPressed: () {
-                // Return to previous screen pretending we saved this
-                Navigator.of(context).pop();
-              },
+              text: isLoading.value ? 'Menyimpan...' : 'Simpan Barang',
+              icon: isLoading.value ? null : const Icon(LucideIcons.save, size: 20),
+              onPressed: isLoading.value
+                  ? null
+                  : () async {
+                      if (nameController.text.trim().isEmpty || stockController.text.trim().isEmpty || priceController.text.trim().isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Nama, stok, dan harga harus diisi!')),
+                        );
+                        return;
+                      }
+
+                      final stock = int.tryParse(stockController.text.trim()) ?? 0;
+                      final price = double.tryParse(priceController.text.trim()) ?? 0.0;
+
+                      isLoading.value = true;
+                      await ref.read(inventoryProvider.notifier).addItem(
+                        name: nameController.text.trim(),
+                        sku: skuController.text.trim(),
+                        category: categoryController.text.trim(),
+                        initialStock: stock,
+                        unit: unitController.text.trim(),
+                        price: price,
+                        description: descController.text.trim(),
+                      );
+
+                      if (context.mounted) {
+                        isLoading.value = false;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Barang berhasil disimpan!')),
+                        );
+                        context.pop();
+                      }
+                    },
             ),
             const SizedBox(height: AppSpacing.xl),
           ],
